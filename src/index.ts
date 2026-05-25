@@ -1,5 +1,7 @@
 import { NodeHtmlMarkdown } from 'node-html-markdown';
 
+const userAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36';
+
 const jsonResponse = (body: unknown, status: number = 200) => {
 	return new Response(
 		JSON.stringify(body),
@@ -43,7 +45,7 @@ export default {
 		const cachedResponse = await getCachedResponse(request);
 		if (cachedResponse) return cachedResponse;
 
-		const response = await fetch(url);
+		const response = await fetch(url, { headers: { 'User-Agent': userAgent } });
 		if (!response.ok)
 			return errorResponse('Failed to fetch URL', response.status);
 
